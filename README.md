@@ -7,11 +7,11 @@ Passos para provisionar o servidor Debian:
         - Debian foi escolhido por sua estabilidade e suporte amplo.
 
     2 - Instalação do Debian:   
-        -Faça o download da ISO do Debian e o provisione, em VM, Cloud ou até mesmo container.
-        -Durante a instalação, configure a rede e o particionamento conforme necessário.
+            - Faça o download da ISO do Debian e o provisione, em VM, Cloud ou até mesmo container.
+            -Durante a instalação, configure a rede e o particionamento conforme necessário.
 
-    3 - Configuração de Rede:
-    Edite o arquivo /etc/network/interfaces para configurar IP estático caso não tenha DHCP se necessário.
+    3 - Configuração de Rede:   
+            -Edite o arquivo /etc/network/interfaces para configurar IP estático caso não tenha DHCP se necessário.
     bash
     Copiar código
     nano /etc/network/interfaces
