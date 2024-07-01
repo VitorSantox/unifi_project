@@ -3,73 +3,65 @@
 
 1. Provisionamento do Servidor
 Passos para provisionar o servidor Debian:
-    1- Escolha do Sistema Operacional: 
+    1 - Escolha do Sistema Operacional: 
         - Debian foi escolhido por sua estabilidade e suporte amplo.
 
     2 - Instalação do Debian:   
             - Faça o download da ISO do Debian e o provisione, em VM, Cloud ou até mesmo container.
-            -Durante a instalação, configure a rede e o particionamento conforme necessário.
+            - Durante a instalação, configure a rede e o particionamento conforme necessário.
 
     3 - Configuração de Rede:   
-            -Edite o arquivo /etc/network/interfaces para configurar IP estático caso não tenha DHCP se necessário.
-    bash
-    Copiar código
-    nano /etc/network/interfaces
-    Exemplo de configuração:
-    bash
-    Copiar código
-    auto eth0
-    iface eth0 inet static
-        address 192.168.1.100
-        netmask 255.255.255.0
-        gateway 192.168.1.1
-    Reinicie o serviço de rede:
-    '''bash'''
-    Copiar código
-    systemctl restart networking
+            - Edite o arquivo /etc/network/interfaces para configurar IP estático caso não tenha DHCP se necessário.
+
+
+
+
 2. Instalação do UniFi Controller
 Passos detalhados para instalar o UniFi Controller:
+    1 - Atualize o sistema:
+            '''bash
+            sudo apt-get update && sudo apt-get upgrade -y
+            '''
 
-Atualize o sistema:
 
-bash
-Copiar código
-sudo apt-get update && sudo apt-get upgrade -y
-Adicionar repositório UniFi:
+    2 - Adicione a chave GPG do repositório:
+            '''bash
+            sudo wget -O /etc/apt/trusted.gpg.d/unifi-repo.gpg https://dl.ui.com/unifi/unifi-repo.gpg
+            '''
 
-Adicione a chave GPG do repositório:
-bash
-Copiar código
-sudo wget -O /etc/apt/trusted.gpg.d/unifi-repo.gpg https://dl.ui.com/unifi/unifi-repo.gpg
-Adicione o repositório ao sources.list:
-bash
-Copiar código
-echo 'deb [arch=amd64] https://www.ui.com/downloads/unifi/debian stable ubiquiti' | sudo tee /etc/apt/sources.list.d/100-ubnt.list
-Instalar dependências:
+    3 - Adicione o repositório ao sources.list:
+        ''''bash
+        echo 'deb [arch=amd64] https://www.ui.com/downloads/unifi/debian stable ubiquiti' | sudo tee /etc/apt/sources.list.d/100-ubnt.list
 
-Instale libssl1.0.0 necessário para a versão do MongoDB usada pelo UniFi:
-bash
-Copiar código
-echo "deb http://security.debian.org/debian-security jessie/updates main" | sudo tee -a /etc/apt/sources.list
-sudo apt-get update
-sudo apt-get install -y --no-install-recommends libssl1.0.0
-Instalar MongoDB 3.6:
 
-Adicione a chave e o repositório do MongoDB:
-bash
-Copiar código
-wget -qO - https://www.mongodb.org/static/pgp/server-3.6.asc | sudo apt-key add -
-echo "deb [trusted=yes] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/3.6 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.6.list
-sudo apt-get update
-Instale o MongoDB:
-bash
-Copiar código
-sudo apt-get install -y mongodb-org=3.6.23 mongodb-org-server=3.6.23 mongodb-org-shell=3.6.23 mongodb-org-mongos=3.6.23 mongodb-org-tools=3.6.23
-Instalar UniFi Controller:
+    4 - Instalar dependências:
+        Instale libssl1.0.0 necessário para a versão do MongoDB usada pelo UniFi:
+        '''bash
+        echo "deb http://security.debian.org/debian-security jessie/updates main" | sudo tee -a /etc/apt/sources.list
+        sudo apt-get update
+        sudo apt-get install -y --no-install-recommends libssl1.0.0
+        '''
 
-bash
-Copiar código
-sudo apt-get install -y unifi
+    5 - Instalar MongoDB 3.6:
+        Adicione a chave e o repositório do MongoDB:
+        '''bash
+        wget -qO - https://www.mongodb.org/static/pgp/server-3.6.asc | sudo apt-key add -
+        
+        echo "deb [trusted=yes] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/3.6 multiverse" | sudo tee /etc/apt/sources.list.d/
+        mongodb-org-3.6.list
+
+        sudo apt-get update
+
+
+    6 - Instale o MongoDB:
+        '''bash
+        sudo apt-get install -y mongodb-org=3.6.23 mongodb-org-server=3.6.23 mongodb-org-shell=3.6.23 mongodb-org-mongos=3.6.23 mongodb-org-tools=3.6.23
+
+    7 - Instalar UniFi Controller:
+        '''bash
+        sudo apt-get install -y unifi
+    
+    
 3. Configuração do UniFi Controller
 Configurações pós-instalação:
 
@@ -83,6 +75,8 @@ Acessar a interface do UniFi:
 
 Abra um navegador e acesse https://<IP_DO_SEU_SERVIDOR>:8443
 Complete a configuração inicial seguindo o assistente.
+
+
 4. Uso de Scripts Shell
 Exemplos de scripts shell utilizados:
 
