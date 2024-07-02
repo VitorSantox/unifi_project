@@ -1,0 +1,53 @@
+Unifi debian:
+
+sudo apt-get update && sudo apt-get install ca-certificates apt-transport-https
+
+
+#Use the following command to add a new source list:
+echo "deb [ arch=amd64 ] https://www.ui.com/downloads/unifi/debian stable ubiquiti" | sudo tee /etc/apt/sources.list.d/100-ubnt-unifi.list
+
+#Chave GPG Keys
+sudo wget -O /etc/apt/trusted.gpg.d/unifi-repo.gpg https://dl.ui.com/unifi/unifi-repo.gpg
+
+#Passos para instalar libssl1.1 manualmente a partir de outro repositório:
+sudo nano /etc/apt/sources.list
+deb http://deb.debian.org/debian buster main
+sudo apt-get update
+sudo apt-get install -y libssl1.1
+sudo nano /etc/apt/sources.list
+deb http://deb.debian.org/debian buster main
+
+
+#Instalar MongoDB após a instalação do libssl1.1:
+wget -qO - https://www.mongodb.org/static/pgp/server-3.6.asc | sudo apt-key add -
+
+echo "deb [trusted=yes] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/3.6 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.6.list
+
+sudo apt-get update
+
+sudo apt-get install -y mongodb-org=3.6.23 mongodb-org-server=3.6.23 mongodb-org-shell=3.6.23 mongodb-org-mongos=3.6.23 mongodb-org-tools=3.6.23
+sudo systemctl start mongod
+sudo systemctl enable mongod
+sudo systemctl status mongod
+
+#Unifi
+Adicionar a chave de repositório do UniFi
+sudo wget -O /etc/apt/trusted.gpg.d/unifi-repo.gpg https://dl.ui.com/unifi/unifi-repo.gpg
+
+Adicionar o repositório UniFi ao sources.list
+echo 'deb https://www.ui.com/downloads/unifi/debian stable ubiquiti' | sudo tee /etc/apt/sources.list.d/100-ubnt-unifi.list
+Atualizar a lista de pacotes
+Instalar o UniFi Controller
+sudo apt-get install unifi
+Iniciar e habilitar o serviço UniFi
+sudo systemctl start unifi
+Habilite o serviço UniFi para iniciar automaticamente no boot:
+sudo systemctl enable unifi
+https://<seu_endereço_ip>:8443
+
+Conclusão
+Você agora deve ter o UniFi Controller instalado e funcionando no seu servidor Debian. Se houver algum problema durante a instalação ou configuração, verifique os logs do UniFi para diagnósticos adicionais:
+sudo tail -f /var/log/unifi/server.log
+
+
+
